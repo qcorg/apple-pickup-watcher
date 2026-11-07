@@ -1,0 +1,5 @@
+node_modules/
+.DS_Store
+# Your own settings for tools/dry-run.mjs: they hold push keys.
+*.local.json
+my-settings.json

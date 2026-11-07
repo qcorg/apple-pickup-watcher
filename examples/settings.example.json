@@ -1,0 +1,18 @@
+{
+  "country": "",
+  "location": "98101",
+  "products": [
+    { "part": "MK1H4LL/A", "label": "iPhone Duo 512GB Night Sky", "url": "" },
+    { "part": "MK1F4LL/A", "label": "iPhone Duo 256GB Night Sky", "url": "" }
+  ],
+  "stores": ["Bellevue Square", "Southcenter", "University Village"],
+  "maxDistance": 0,
+  "pollSeconds": 75,
+  "heartbeatHour": -1,
+  "openOnHit": false,
+  "language": "en",
+  "notify": {
+    "chrome": true,
+    "bark": { "enabled": false, "server": "https://api.day.app", "key": "", "critical": false, "quietHours": [23, 8] }
+  }
+}

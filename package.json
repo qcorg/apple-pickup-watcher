@@ -1,0 +1,13 @@
+{
+  "name": "apple-pickup-watcher",
+  "version": "0.1.0",
+  "description": "Chrome extension that watches Apple Store in-store pickup availability and notifies you when a product is in stock.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test 'tests/*.test.js'",
+    "dry-run": "node tools/dry-run.mjs fixtures/ --settings examples/settings.example.json"
+  }
+}

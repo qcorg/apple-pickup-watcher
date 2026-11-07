@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pickup Watcher Settings</title>
+<link rel="stylesheet" href="page.css">
+</head>
+<body>
+  <header><h1>Pickup Watcher settings</h1><a href="status.html">Status</a></header>
+  <p class="muted">Checks Apple Store in-store pickup for the products below and notifies you when one is in stock. Changes take effect when you save.</p>
+
+  <form id="form">
+    <fieldset>
+      <legend>Where</legend>
+      <div class="row">
+        <label>ZIP or postcode<br><input name="location" size="12" placeholder="98101" required></label>
+        <label>Country store<br><input name="country" size="8" placeholder="(US)"></label>
+        <label>Max distance<br><input name="maxDistance" type="number" min="0" step="any" size="6"> <span class="muted">0 = any</span></label>
+      </div>
+      <p class="hint">Country store: leave empty for the US; otherwise the part of your Apple Store address after apple.com/, e.g. <code>uk</code>, <code>ca</code>, <code>au</code>. Only the US store has been tested. Distance is in the unit Apple shows for your country.</p>
+    </fieldset>
+
+    <fieldset>
+      <legend>What</legend>
+      <label>Products, most wanted first: one per line, <code>part number | name | product page</code> (name and page are optional)
+        <textarea name="products" rows="4" placeholder="MK1H4LL/A | iPhone 512GB Night Sky | https://www.apple.com/shop/buy-iphone/..."></textarea></label>
+      <p class="hint">To find a part number: open the product's buy page on apple.com and choose the model, then open Chrome's DevTools (⌥⌘I), go to the Network tab and check pickup at a store. Look for a request named <code>pickup-message</code> or <code>fulfillment-messages</code>; its <code>parts.0</code> parameter is the part number, e.g. <code>MK1H4LL/A</code> (<code>%2F</code> is a <code>/</code>). Up to 10 products.</p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Which stores</legend>
+      <label>Stores, most wanted first: one per line, spelled as Apple does. Leave empty to watch every store Apple returns, nearest first.
+        <textarea name="stores" rows="4" placeholder="Bellevue Square&#10;University Village"></textarea></label>
+      <div id="known" class="hint"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Checks</legend>
+      <div class="row">
+        <label>Check every<br><input name="pollSeconds" type="number" min="60" step="1" size="6"> seconds</label>
+        <label>Daily summary at<br><select name="heartbeatHour"></select></label>
+      </div>
+      <p class="hint">At least 60 seconds. Apple starts refusing checks (HTTP 541) within an hour at 30 seconds; 75 seconds ran for days.</p>
+      <label class="inline"><input type="checkbox" name="openOnHit"> Also open the product page in Chrome when something comes into stock</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Notifications</legend>
+      <label>Language<br><select name="language"><option value="en">English</option><option value="zh">中文</option></select></label>
+      <label class="inline"><input type="checkbox" name="chrome"> Chrome notifications on this computer</label>
+
+      <label class="inline"><input type="checkbox" name="barkEnabled"> Bark (iPhone)</label>
+      <div class="row">
+        <label>Key<br><input name="barkKey" size="26" autocomplete="off" spellcheck="false"></label>
+        <label>Server<br><input name="barkServer" size="26" spellcheck="false"></label>
+      </div>
+      <label class="inline"><input type="checkbox" name="barkCritical"> Ring as a critical alert, through silent mode and Focus, except between
+        <input name="quietFrom" type="number" min="0" max="23" size="3"> and <input name="quietTo" type="number" min="0" max="23" size="3"> h</label>
+      <p class="hint">The key is the part after <code>api.day.app/</code> in the push URL the Bark app shows.</p>
+    </fieldset>
+
+    <div class="buttons">
+      <button type="submit" class="primary">Save</button>
+      <button type="button" id="test">Save and send a test notification</button>
+    </div>
+    <div id="result" class="muted"></div>
+  </form>
+
+  <script type="module" src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+{
+ "head": {
+  "status": "200"
+ },
+ "body": {
+  "stores": [
+   {
+    "storeName": "University Village",
+    "storeNumber": "R072",
+    "city": "Seattle",
+    "storedistance": 4,
+    "partsAvailability": {
+     "MK1F4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1F4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple University Village"
+       }
+      }
+     },
+     "MK1H4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1H4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple University Village"
+       }
+      }
+     },
+     "MK1E4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1E4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple University Village"
+       }
+      }
+     },
+     "MK1G4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1G4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple University Village"
+       }
+      }
+     }
+    }
+   },
+   {
+    "storeName": "Bellevue Square",
+    "storeNumber": "R003",
+    "city": "Bellevue",
+    "storedistance": 6.04,
+    "partsAvailability": {
+     "MK1F4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1F4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "available",
+      "pickupSearchQuote": "Available<br/>Today",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Available today at Apple Bellevue Square"
+       }
+      }
+     },
+     "MK1H4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1H4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Bellevue Square"
+       }
+      }
+     },
+     "MK1E4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1E4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Bellevue Square"
+       }
+      }
+     },
+     "MK1G4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1G4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Bellevue Square"
+       }
+      }
+     }
+    }
+   },
+   {
+    "storeName": "Southcenter",
+    "storeNumber": "R106",
+    "city": "Tukwila",
+    "storedistance": 11.06,
+    "partsAvailability": {
+     "MK1F4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1F4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Southcenter"
+       }
+      }
+     },
+     "MK1H4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1H4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Southcenter"
+       }
+      }
+     },
+     "MK1E4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1E4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Southcenter"
+       }
+      }
+     },
+     "MK1G4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1G4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Southcenter"
+       }
+      }
+     }
+    }
+   },
+   {
+    "storeName": "Alderwood",
+    "storeNumber": "R100",
+    "city": "Lynnwood",
+    "storedistance": 15.44,
+    "partsAvailability": {
+     "MK1F4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1F4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Alderwood"
+       }
+      }
+     },
+     "MK1H4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1H4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Alderwood"
+       }
+      }
+     },
+     "MK1E4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1E4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Alderwood"
+       }
+      }
+     },
+     "MK1G4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1G4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Alderwood"
+       }
+      }
+     }
+    }
+   },
+   {
+    "storeName": "Tacoma Mall",
+    "storeNumber": "R339",
+    "city": "Tacoma",
+    "storedistance": 28.06,
+    "partsAvailability": {
+     "MK1F4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1F4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Tacoma Mall"
+       }
+      }
+     },
+     "MK1H4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1H4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Tacoma Mall"
+       }
+      }
+     },
+     "MK1E4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1E4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Tacoma Mall"
+       }
+      }
+     },
+     "MK1G4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1G4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Tacoma Mall"
+       }
+      }
+     }
+    }
+   },
+   {
+    "storeName": "Pioneer Place",
+    "storeNumber": "R077",
+    "city": "Portland",
+    "storedistance": 145.55,
+    "partsAvailability": {
+     "MK1F4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1F4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Pioneer Place"
+       }
+      }
+     },
+     "MK1H4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1H4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Pioneer Place"
+       }
+      }
+     },
+     "MK1E4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1E4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Pioneer Place"
+       }
+      }
+     },
+     "MK1G4LL/A": {
+      "storePickEligible": true,
+      "partNumber": "MK1G4LL/A",
+      "pickupType": "In-Store Pickup",
+      "pickupDisplay": "unavailable",
+      "pickupSearchQuote": "Currently unavailable",
+      "messageTypes": {
+       "regular": {
+        "storePickupQuote": "Currently unavailable at Apple Pioneer Place"
+       }
+      }
+     }
+    }
+   }
+  ]
+ }
+}
