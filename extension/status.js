@@ -1,8 +1,7 @@
 import { texts } from './lib/i18n.js';
-import { dayKey, isAvailable, labelOf, storeOrder } from './lib/logic.js';
-import { missing, normalize } from './lib/settings.js';
+import { dayKey, daysAgo, isAvailable, labelOf, storeOrder } from './lib/logic.js';
+import { isHttpsUrl, missing, normalize } from './lib/settings.js';
 
-const DAY = 86_400_000;
 const $ = (sel) => document.querySelector(sel);
 const time = (t) => (t ? new Date(t).toLocaleString() : '—');
 
@@ -15,7 +14,7 @@ function el(tag, text, className) {
 
 async function render() {
   const now = Date.now();
-  const keys = ['settings', 'state', dayKey(now, 'polls'), dayKey(now - DAY, 'changes'), dayKey(now, 'changes')];
+  const keys = ['settings', 'state', dayKey(now, 'polls'), dayKey(daysAgo(now, 1), 'changes'), dayKey(now, 'changes'), 'notifyError'];
   const got = await chrome.storage.local.get(keys);
   const cfg = normalize(got.settings);
   const state = got.state ?? {};
@@ -27,8 +26,15 @@ async function render() {
   $('#setup').hidden = !todo.length;
   $('#setup').textContent = todo.length ? `Not checking yet. ${todo.map((k) => texts('en')[k]).join(' ')} Open Settings.` : '';
 
+  const failed = got.notifyError;
+  const badServer = cfg.notify.bark.enabled && !isHttpsUrl(cfg.notify.bark.server);
+  $('#notifyError').hidden = !failed && !badServer;
+  $('#notifyError').textContent = badServer
+    ? 'Bark is on, but its server is not an https:// address, so nothing goes to your phone. Fix it in Settings.'
+    : failed ? `The last notification did not get through (${time(failed.t)}: ${failed.errors.join('; ')}). Check Settings, then send a test notification.` : '';
+
   const mode = $('#mode');
-  mode.textContent = todo.length ? 'Not set up' : state.paused ? 'Paused' : backedOff ? `Paused by Apple’s throttle until ${time(state.backoff.until)}` : 'Running';
+  mode.textContent = todo.length ? 'Not set up' : backedOff ? `Paused by Apple’s throttle until ${time(state.backoff.until)}` : state.paused ? 'Paused' : 'Running';
   mode.className = todo.length || state.paused || backedOff ? 'stopped' : 'running';
   $('#toggle').textContent = state.paused ? 'Resume' : 'Pause';
   $('#toggle').dataset.cmd = state.paused ? 'resume' : 'pause';

@@ -3,8 +3,9 @@
 // Nothing in this file touches chrome.* or the network, so Node tools and tests share it.
 
 // Apple answered HTTP 541 (its throttle) within an hour when checked every 30 s; every 60–75 s ran for days.
+// Scheduled checks are never closer together than this.
 export const MIN_POLL_SECONDS = 60;
-// Even "Check now" and a settings change wait this long after the previous request.
+// Even "Check now" waits this long after the previous request.
 export const MIN_GAP_SECONDS = 30;
 export const MAX_PRODUCTS = 10;
 
@@ -75,6 +76,8 @@ export function normalize(raw = {}) {
   const n = r.notify ?? {};
   const bark = { ...d.notify.bark, ...n.bark };
   const quiet = Array.isArray(bark.quietHours) && bark.quietHours.length === 2 ? bark.quietHours.map((h) => num(h, 0, 0, 23)) : d.notify.bark.quietHours;
+  // Kept as typed, so the options page does not lose it; a server that is not https gets no pushes (see notify.js).
+  const barkServer = str(bark.server) ? httpsUrl(bark.server, '') || str(bark.server) : d.notify.bark.server;
   return {
     country: str(r.country).toLowerCase().replace(/[^a-z0-9/-]/g, '').replace(/^\/+|\/+$/g, ''),
     location: str(r.location),
@@ -94,7 +97,7 @@ export function normalize(raw = {}) {
       chrome: bool(n.chrome, d.notify.chrome),
       bark: {
         enabled: bool(bark.enabled, false),
-        server: httpsUrl(bark.server, d.notify.bark.server),
+        server: barkServer,
         key: str(bark.key),
         critical: bool(bark.critical, false),
         sound: str(bark.sound) || d.notify.bark.sound,
@@ -104,6 +107,11 @@ export function normalize(raw = {}) {
     },
   };
 }
+
+export const isHttpsUrl = (v) => httpsUrl(v, '') !== '';
+
+// What a check asks Apple about. When it changes, what was seen under the old settings no longer applies.
+export const watchScope = (cfg) => JSON.stringify([cfg.country, cfg.location, cfg.products.map((p) => p.part), cfg.stores, cfg.maxDistance]);
 
 // What still has to be filled in before checks can start, as message keys (see i18n.js).
 export function missing(cfg) {
@@ -124,7 +132,8 @@ export const productLink = (cfg, product) => product?.url || `${appleBase(cfg)}/
 // A self-hosted Bark server is outside the manifest's host_permissions, so it needs an optional permission, granted on the options page.
 export const BUILT_IN_ORIGINS = ['https://api.day.app'];
 export function extraOrigins(cfg) {
-  if (!cfg.notify.bark.enabled) return [];
-  const origin = new URL(cfg.notify.bark.server).origin;
+  const { enabled, server } = cfg.notify.bark;
+  if (!enabled || !isHttpsUrl(server)) return [];
+  const origin = new URL(server).origin;
   return BUILT_IN_ORIGINS.includes(origin) ? [] : [`${origin}/*`];
 }

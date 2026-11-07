@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { DEFAULTS, MIN_POLL_SECONDS, appleBase, extraOrigins, hostUrl, missing, normalize, productLink } from '../extension/lib/settings.js';
+import { DEFAULTS, MIN_POLL_SECONDS, appleBase, extraOrigins, hostUrl, isHttpsUrl, missing, normalize, productLink, watchScope } from '../extension/lib/settings.js';
 
 test('empty or junk settings fall back to the defaults', () => {
   for (const raw of [undefined, null, {}, 'junk']) assert.deepEqual(normalize(raw), normalize(DEFAULTS));
@@ -51,10 +51,22 @@ test('notification settings: defaults, https servers only, and permissions for s
   const cfg = normalize({ notify: { bark: { enabled: true, key: ' abc ', server: 'https://bark.example.com/' } } });
   assert.equal(cfg.notify.bark.key, 'abc');
   assert.equal(cfg.notify.bark.server, 'https://bark.example.com');
-  assert.equal(normalize({ notify: { bark: { server: 'http://insecure.example' } } }).notify.bark.server, 'https://api.day.app', 'plain http falls back to the default');
+  const insecure = normalize({ notify: { bark: { enabled: true, key: 'k', server: 'http://bark.lan:8080' } } }).notify.bark;
+  assert.deepEqual([insecure.enabled, insecure.server], [true, 'http://bark.lan:8080'], 'kept as typed (it gets no pushes; see notify.test.js)');
+  assert.deepEqual(extraOrigins(normalize({ notify: { bark: { enabled: true, server: 'http://bark.lan:8080' } } })), []);
+  assert.equal(normalize({ notify: { bark: { enabled: true, key: 'k', server: '' } } }).notify.bark.enabled, true, 'an empty server means api.day.app');
+  assert.deepEqual(['https://bark.example.com', 'http://bark.lan', 'bark.lan', ''].map(isHttpsUrl), [true, false, false, false]);
   assert.deepEqual(extraOrigins(cfg), ['https://bark.example.com/*']);
   assert.deepEqual(extraOrigins(normalize({ notify: { bark: { enabled: true, key: 'k' } } })), [], 'api.day.app is in the manifest');
   assert.deepEqual(extraOrigins(normalize({ notify: { bark: { enabled: false, server: 'https://bark.example.com' } } })), []);
+});
+
+test('watchScope changes with what Apple is asked about, not with labels, pace or notifications', () => {
+  const base = normalize({ location: '98101', products: [{ part: 'MK1H4LL/A', label: 'a' }], stores: ['Bellevue Square'] });
+  const same = [{ products: [{ part: 'MK1H4LL/A', label: 'renamed' }] }, { pollSeconds: 90 }, { notify: { bark: { enabled: true, key: 'k' } } }, { language: 'zh' }];
+  for (const change of same) assert.equal(watchScope(normalize({ ...base, ...change })), watchScope(base), JSON.stringify(change));
+  const different = [{ location: '98004' }, { country: 'ca' }, { products: [{ part: 'MK1F4LL/A' }] }, { stores: [] }, { maxDistance: 10 }];
+  for (const change of different) assert.notEqual(watchScope(normalize({ ...base, ...change })), watchScope(base), JSON.stringify(change));
 });
 
 test('backoff, heartbeat and language are kept in range', () => {

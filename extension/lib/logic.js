@@ -16,6 +16,14 @@ export function dayKey(t, prefix) {
   return `${prefix}:${ymd.join('-')}`;
 }
 
+// Noon, local time, n calendar days before t: subtracting 24 h would skip a day after a 23-hour (DST) day.
+export function daysAgo(t, n) {
+  const d = new Date(t);
+  d.setHours(12, 0, 0, 0);
+  d.setDate(d.getDate() - n);
+  return d.getTime();
+}
+
 // The call apple.com's own "check availability" makes. One request covers every product and every nearby store.
 export const pickupPath = (cfg) => {
   const parts = cfg.products.map((p, i) => `parts.${i}=${encodeURIComponent(p.part)}`).join('&');

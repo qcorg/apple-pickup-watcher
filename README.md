@@ -9,9 +9,9 @@ A Chrome extension that watches Apple Store **in-store pickup** for the products
 - **Any product, any store:** up to 10 Apple part numbers, ranked by preference. Watch the stores you list, in your order, or every store near a ZIP/postcode, nearest first.
 - **Runs in your own Chrome.** It needs no server, account or API key. It makes the same request apple.com makes when you check a store, from a pinned apple.com tab.
 - **Polite by design:**
-  - It checks at most once a minute.
-  - When Apple pushes back it pauses for 10, 30, then 60 minutes.
-  - Only one request is ever in flight.
+  - Scheduled checks are at least a minute apart. **Check now** waits until 30 s after the last check.
+  - When Apple pushes back it pauses for 10, 30, then 60 minutes. Nothing checks during a pause, not even **Check now** or new settings.
+  - Only one check runs at a time.
 - **Notifications:**
   - Chrome notifications, with no setup.
   - Bark (iPhone). It can ring as a critical alert through silent mode, with quiet hours.
@@ -59,8 +59,8 @@ Accessories often show the part number in the page address, e.g. `apple.com/shop
 - **Bark (iPhone):**
   1. Install [Bark](https://github.com/Finb/Bark) from the App Store.
   2. Copy the key from the push URL it shows: the part after `api.day.app/`. Paste it into the settings.
-  3. Optionally turn on **critical alert**: a hit then rings through silent mode and Focus, except in the quiet hours you set. iOS asks you to allow critical alerts for Bark the first time.
-- **Self-hosted Bark server:** you can use your own. Chrome asks for permission to reach it when you save.
+  3. Optionally turn on **critical alert**: a hit then rings through silent mode and Focus. In the quiet hours you set it's an ordinary notification. iOS asks you to allow critical alerts for Bark the first time.
+- **Self-hosted Bark server:** you can use your own, over https. Chrome asks for permission to reach it when you save.
 
 **Save and send a test notification** checks every channel you turned on.
 
@@ -69,8 +69,9 @@ Accessories often show the part number in the page address, e.g. `apple.com/shop
 - Every check runs `GET /shop/retail/pickup-message?parts.0=…&location=…` inside a pinned, inactive apple.com tab in your Chrome profile. One request covers every product and every nearby store.
 - A store counts as "in stock" when Apple's `pickupDisplay` says `available`. If that flag is missing, the quote text decides, e.g. "Available Today".
 - If you close the tab, the next check reopens it. If you close every window, it opens a minimized one.
-- **When Apple pushes back:** HTTP 541 (Apple's throttle), 403 or 429, a sign-in redirect, or an HTML page instead of JSON all trigger a pause of 10, 30, then 60 minutes. You get one notification, and another when checks recover.
+- **When Apple pushes back:** HTTP 541 (Apple's throttle), 403 or 429, a sign-in redirect, or an HTML page instead of JSON all trigger a pause of 10, 30, then 60 minutes. Nothing checks during the pause, not even **Check now**. You get one notification, and another when checks recover.
 - **Other failures:** a single 5xx is retried at the normal pace. Five failures in a row (network, timeouts) send one notification.
+- If a notification doesn't get through (a wrong Bark key, a server that's down), the status page says so until one does.
 - The status page shows the last answer for every store. **Download logs** saves seven days of checks and changes. It leaves out your settings, which hold your push keys.
 
 ### Rate limits: what we learned

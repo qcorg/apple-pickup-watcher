@@ -1,4 +1,4 @@
-import { extraOrigins, normalize } from './lib/settings.js';
+import { extraOrigins, isHttpsUrl, normalize } from './lib/settings.js';
 
 const form = document.querySelector('#form');
 const f = form.elements;
@@ -59,6 +59,7 @@ let saved = {};
 // permissions.request needs the click itself, so it runs before anything else is awaited.
 async function save() {
   const cfg = read(saved);
+  if (cfg.notify.bark.enabled && !isHttpsUrl(cfg.notify.bark.server)) throw new Error('the Bark server has to be an https:// address.');
   const origins = extraOrigins(cfg);
   if (origins.length && !(await chrome.permissions.request({ origins }))) {
     throw new Error(`Chrome needs permission to reach ${origins.join(', ')} to send notifications there.`);
@@ -73,7 +74,7 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
   try {
     await save();
-    $('#result').textContent = 'Saved. A check runs now; see Status.';
+    $('#result').textContent = 'Saved. See Status for the next check.';
   } catch (err) {
     $('#result').textContent = `Not saved: ${err.message}`;
   }

@@ -1,8 +1,21 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { normalize } from '../extension/lib/settings.js';
-import { classify, decide, initialState, isAvailable, parsePickup, pickTarget, pickupPath, signature } from '../extension/lib/logic.js';
+import { classify, dayKey, daysAgo, decide, initialState, isAvailable, parsePickup, pickTarget, pickupPath, signature } from '../extension/lib/logic.js';
 import { CFG, MIN, P256, P512, T0, TODAY, UNWATCHED, notes, ok, response } from './helpers.js';
+
+test('daysAgo counts calendar days, so the day after a 23-hour DST day does not skip it', () => {
+  const tz = process.env.TZ;
+  process.env.TZ = 'America/Los_Angeles';
+  try {
+    const t = new Date(2026, 2, 9, 0, 30).getTime(); // 00:30 on the day after clocks went forward (2026-03-08)
+    assert.equal(dayKey(t - 86_400_000, 'x'), 'x:2026-03-07', 'subtracting 24 h skips a day');
+    assert.deepEqual([0, 1, 2].map((n) => dayKey(daysAgo(t, n), 'x')), ['x:2026-03-09', 'x:2026-03-08', 'x:2026-03-07']);
+  } finally {
+    if (tz === undefined) delete process.env.TZ;
+    else process.env.TZ = tz;
+  }
+});
 
 test('pickupPath asks for every product in one call, under the country store if there is one', () => {
   assert.equal(pickupPath(CFG), '/shop/retail/pickup-message?pl=true&parts.0=MK1H4LL%2FA&parts.1=MK1F4LL%2FA&location=98101');

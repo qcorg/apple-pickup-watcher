@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "description": "Watches Apple Store in-store pickup for the products and stores you choose, and notifies you when one is in stock.",
   "minimum_chrome_version": "130",
-  "permissions": ["alarms", "storage", "unlimitedStorage", "scripting", "tabs", "notifications"],
+  "permissions": ["alarms", "storage", "unlimitedStorage", "scripting", "notifications"],
   "host_permissions": ["https://www.apple.com/*", "https://api.day.app/*"],
   "optional_host_permissions": ["https://*/*"],
   "background": { "service_worker": "background.js", "type": "module" },
